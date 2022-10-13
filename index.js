@@ -2,9 +2,10 @@ const express = require('express');
 const path = require('path');
 const mongoose = require('mongoose');
 
-const app = express();
-app.set('view engine', 'ejs');
 const port = 7000;
+const app = express();
+
+const dbUserData = require('./models/user');
 
 mongoose.connect("mongodb+srv://admin:admin@cluster0.gxzxfor.mongodb.net/Kiosk?retryWrites=true&w=majority", (err, cnt) => {
     if(err){
@@ -14,24 +15,50 @@ mongoose.connect("mongodb+srv://admin:admin@cluster0.gxzxfor.mongodb.net/Kiosk?r
     }
 })
 
-
-
 app.use(express.static('public'));
+app.use(express.json());
+app.use(express.urlencoded());
+app.set('view engine', 'ejs');
+
 
 app.get('/', (req, res) => {
     res.render('index');
 })
 
-app.get('/g2Test', (req, res) => {
-    res.render('g2Test');
+app.get('/G2_page', (req, res) => {
+    res.render('G2_page');
 })
 
-app.get('/gTest', (req, res) => {
-    res.render('gTest');
+app.get('/G_page', (req, res) => {
+    res.render('G_page');
 })
 
 app.get('/login', (req, res) => {
     res.render('login');
+})
+
+app.post('/form/userData', (req, res) => {
+    // console.log(">>>>>>>>>>>>>here 37>>>", req.body);
+    dbUserData.create({
+        firstName: req.body.firstName,
+        lastName: req.body.lastName,
+        age: req.body.age,
+        licenseNumber: req.body.licenseNumber,
+        dob: req.body.dob,
+        carDetails: {
+            make: req.body.carMake,
+            model: req.body.carModel,
+            year: req.body.carYear,
+            plateNumber: req.body.numberPlate
+        }
+      },(err,blogpost) =>{
+        if(err){
+            console.log(`err,`, err);
+        } else {
+            console.log('Data saved in DB: ', blogpost);
+            res.redirect('/')
+        }
+    })
 })
 
 app.listen(port, ()=>{

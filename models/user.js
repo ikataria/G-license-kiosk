@@ -19,6 +19,10 @@ const userSchema = new Schema({
         required: true,
         // unique: true
     },
+    dob: {
+        type: Date,
+        required: true,
+    },
     carDetails: {
         make: String,
         model: String,
