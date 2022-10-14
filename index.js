@@ -2,10 +2,11 @@ const express = require('express');
 const path = require('path');
 const mongoose = require('mongoose');
 
+const dbUserData = require('./models/user');
+
 const port = 7000;
 const app = express();
 
-const dbUserData = require('./models/user');
 
 mongoose.connect("mongodb+srv://admin:admin@cluster0.gxzxfor.mongodb.net/Kiosk?retryWrites=true&w=majority", (err, cnt) => {
     if(err){
@@ -53,11 +54,24 @@ app.post('/form/userData', (req, res) => {
         }
       },(err,blogpost) =>{
         if(err){
-            console.log(`err,`, err);
+            console.log(`Err`, err);
         } else {
             console.log('Data saved in DB: ', blogpost);
             res.redirect('/')
         }
+    })
+})
+
+app.get('/fetchUser', (req, res) => {
+    dbUserData.findOne({licenseNumber: req.query.licenseNumber}, (err, userData) => {
+        // if(err || !userData){
+        //     console.log('No User Found');
+        //     res.redirect('/G2_page')
+        // } else {
+        //     console.log(`${userData}`);
+        //     res.render('G_page', {G2User: userData})
+        // }
+        res.render('G_page', {G2User: userData})
     })
 })
 
