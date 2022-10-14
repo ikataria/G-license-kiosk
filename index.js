@@ -39,7 +39,6 @@ app.get('/login', (req, res) => {
 })
 
 app.post('/form/userData', (req, res) => {
-    // console.log(">>>>>>>>>>>>>here 37>>>", req.body);
     dbUserData.create({
         firstName: req.body.firstName,
         lastName: req.body.lastName,
@@ -64,17 +63,28 @@ app.post('/form/userData', (req, res) => {
 
 app.get('/fetchUser', (req, res) => {
     dbUserData.findOne({licenseNumber: req.query.licenseNumber}, (err, userData) => {
-        // if(err || !userData){
-        //     console.log('No User Found');
-        //     res.redirect('/G2_page')
-        // } else {
-        //     console.log(`${userData}`);
-        //     res.render('G_page', {G2User: userData})
-        // }
+        console.log('No User Found', userData);
         res.render('G_page', {G2User: userData})
     })
 })
 
+app.post('/updateUser', (req, res) => {
+    let updateQuery = {
+        "carDetails.make": req.body.carDetails.make, 
+        "carDetails.model": req.body.carDetails.model, 
+        "carDetails.year": req.body.carDetails.year, 
+        "carDetails.plateNumber": req.body.carDetails.plateNumber
+    }
+
+    dbUserData.findOneAndUpdate({licenseNumber: req.body.licenseNumber}, updateQuery, {new: true}, (err, updatedData) => {
+        if(err){
+            console.log('Error while updating data');
+        } else {
+            console.log(`User data updated successfully`, updatedData);
+            res.render('G_page')
+        }
+    })
+})
 app.listen(port, ()=>{
     console.log(`App listening on port ${port}`)
 });

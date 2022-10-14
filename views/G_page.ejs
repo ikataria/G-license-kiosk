@@ -43,74 +43,60 @@
                             </form>
                             <br>
 
-                            <u>Car Details</u>
                             <% if(typeof G2User != "undefined"){ %>
                                 <% if(G2User == null){ %>
-                                    <p>User not found</p>
-                                <% } else { %>
+                                    <p style="font-size: 25px; font-weight: bold; color: red;">User not found !</p>
+                                    <% } else { %>
+                                    <u style="font-size: 25px; font-weight: bold;">User Details</u>
                                     <form id="contactForm" data-sb-form-api-token="API_TOKEN" action="/updateUser" method="post">
-                                        <!-- <div class="form-floating"> -->
-                                            <!-- <div class="input-box1"> -->
-                                            <!-- <div class="form-control"> -->
-                                                <!-- <span >First Name</span> -->
-                                                <div class="form-floating">
-                                                    <input class="form-control" type="text" name="firstName" readonly value="<%= G2User.firstName %>">
-                                                    <label for="name">First Name</label>
-                                                </div>
-                                            <!-- </div> -->
-                                            <!-- <div class="input-box1"> -->
-                                            <!-- <div class="form-control"> -->
-                                                <div class="form-floating">
-                                                    <input class="form-control" type="text" name="lastName" readonly value="<%= G2User.lastName %>">
-                                                    <label>Last Name</label>
-                                                </div>
-                                                <!-- <span class="details1">Last Name</span> -->
-                                            <!-- </div> -->
-                                            <!-- <div class="input-box1"> -->
+                                        <div class="form-floating">
+                                            <input class="form-control" type="text" name="firstName" readonly value="<%= G2User.firstName %>">
+                                            <label for="name">First Name</label>
+                                        </div>
+                                    
+                                        <div class="form-floating">
+                                            <input class="form-control" type="text" name="lastName" readonly value="<%= G2User.lastName %>">
+                                            <label>Last Name</label>
+                                        </div>
+                                        
+                                        <div class="form-floating">
+                                            <input class="form-control" type="text" name="licenseNumber" readonly value="<%= G2User.licenseNumber %>">
+                                            <label>License Number</label>
+                                        </div>
 
-                                                <div class="form-floating">
-                                                    <input class="form-control" type="text" name="licenseNumber" readonly value="<%= G2User.licenseNumber %>">
-                                                    <label >License Number</label>
-                                                </div>
+                                        <div class="form-floating">
+                                            <input class="form-control" type="number" name="age" readonly value="<%= G2User.age %>">
+                                            <label>Age</label>
+                                        </div>
+                                    
+                                        <div class="form-floating">
+                                            <input class="form-control" type="text" name="dob" readonly value="<%= new Date(G2User.dob).toDateString() %>">
+                                            <label>DOB</label>
+                                        </div>
+                                        
+                                        <br>
+                                        <u style="font-size: 25px; font-weight: bold;">Car Details</u> <span style="margin-left: 10px;">(Editable field)</span>
+                                        <div class="form-floating">
+                                            <input class="form-control" type="text" name="carDetails[make]" value="<%= G2User.carDetails.make %>">
+                                            <label>Make</label>
+                                        </div>
 
-                                                <div class="form-control">
-                                            </div>
-                                            <!-- <div class="input-box1"> -->
-                                                <div class="form-control">
-                                                <span class="details1">Age</span>
-                                                <input type="text" name="age" readonly value="<%= G2User.age %>">
-                                            </div>
-                                            <!-- <div class="input-box1"> -->
-                                                <div class="form-control">
-                                                <span class="details1">DOB</span>
-                                                <input type="text" name="dob" readonly value="<%= new Date(G2User.dob).toDateString() %>">
-                                            </div>
-                                            <br>
-
-                                            
-                                            <u>Car Details</u>
-                                            <div class="form-control">
-                                                <span class="details">Make</span>
-                                                <input type="text" name="carDetails[make]" value="<%= G2User.carDetails.make %>">
-                                            </div>
-
-                                            <div class="form-control">
-                                                <span class="details">Model</span>
-                                                <input type="text" name="carDetails[model]" value="<%= G2User.carDetails.model %>">
-                                            </div>
-                                            
-                                            <div class="form-control">
-                                                <span class="details">Year</span>
-                                                <input type="text" name="carDetails[year]" value="<%= G2User.carDetails.year %>">
-                                            </div>
-                                            
-                                            <div class="form-control">
-                                                <span class="details">Plate Number</span>
-                                                <input type="text" name="carDetails[plateNumber]" value="<%= G2User.carDetails.plateNumber %>">
-                                            </div>
-                                            
-                                            <button id="submit" type="submit">Update</button>
-                                        <!-- </div> -->
+                                        <div class="form-floating">
+                                            <input class="form-control" type="text" name="carDetails[model]" value="<%= G2User.carDetails.model %>">
+                                            <label>Model</label>
+                                        </div>
+                                        
+                                        <div class="form-floating">
+                                            <input class="form-control" type="text" name="carDetails[year]" value="<%= G2User.carDetails.year %>">
+                                            <label>Year</label>
+                                        </div>
+                                        
+                                        <div class="form-floating">
+                                            <input class="form-control" type="text" name="carDetails[plateNumber]" value="<%= G2User.carDetails.plateNumber %>">
+                                            <label>Plate Number</label>
+                                        </div>
+                                        <br>
+                                        <button class="btn btn-primary text-uppercase" id="submitButton" type="submit">Update</button>
                                     </form>
                                 <% } %> 
                             <% }%>
